@@ -1,4 +1,4 @@
-package bin;
+package ui;
 
 public class XMLTestesPresenter {
 	
