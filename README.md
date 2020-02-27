@@ -1,7 +1,7 @@
 # StardewValleyMoneyHackTool
 Custom mod tool developed by me. 
 
-Load user XML file
-Enter new money value
-Set the value in XML
-Load game with new money!
+1) Load user XML file.
+2) Enter new money value.
+3) Set the value in XML.
+4) Load game with new money!
