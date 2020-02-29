@@ -37,7 +37,9 @@ public class XMLTestesView {
 
         n.setVisible(true);
         n.setTitle("Stardew Valley Money Mod v1.1");
-        
+        n.getInfoLabel().setText("Load a user XML file.");
+        n.getXmlArea().setWrapStyleWord(true);
+        n.getXmlArea().setText("Welcome to the tool. \n\nLoad your user's XML file, \nthen set your new money amount. \n\nIt's that easy. \n\nThanks for using! \n\n-FrodoSackins");;
         n.getjMenuItem1().addActionListener(new ActionListener() {
 
 			@Override
@@ -206,7 +208,7 @@ public class XMLTestesView {
             // Focus the text area, otherwise the highlighting won't show up
             scrollToWord(find);
 
-            n.getInfoLabel().setText("File Loaded.");
+            n.getInfoLabel().setText("File Loaded. Enter new money amount and click Set.");
 
         } if (i==1) {
         	
