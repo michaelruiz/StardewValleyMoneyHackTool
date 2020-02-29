@@ -1,9 +1,10 @@
 package ui;
-public class UI  {
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		XMLTestesView view = new XMLTestesView();
-		
-	}
+
+public class UI {
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        XMLTestesView cont = new XMLTestesView();
+
+    }
 }

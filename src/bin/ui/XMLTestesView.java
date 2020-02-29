@@ -1,165 +1,273 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
+import java.awt.Dialog;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 
-import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.text.Document;
 
-public class XMLTestesView extends JFrame implements ActionListener{
+import com.sun.javafx.PlatformUtil;
 
-	private XMLTestesPresenter presenter;
-	private XMLTestesModel model;
-	
-	JTextField moneyTextField;
-	JButton setButton;
-	JButton selectXMLButton;
-	JLabel filepathLabel;
-	JTextArea infoLabel;
-	String newMoney;
-	JFileChooser jfc1;
-	String filepath;
-	JTextArea xmlPreviewTextArea;
-	CustomMenu menu;
-	JPanel panel;
-	
-	public XMLTestesView(){
-		presenter = new XMLTestesPresenter(this);
-		setModel(getPresenter().getModel());
+public class XMLTestesView {
 
-		buildUI();
-						
-	}
+    private XMLTestesPresenter presenter;
+    private XMLTestesModel model;
+    private CustomJFrame n;
+    private JFileChooser jfc1;
 
-	public XMLTestesPresenter getPresenter(){
-		return presenter;
-	}
-	public void setModel(XMLTestesModel model) {
-		this.model = model;
-	}
-	public XMLTestesModel getModel(){
-		return model;
-	}
+    private String find = "<money>";
 
-	public void buildUI(){
-		
-		menu = new CustomMenu();
-		moneyTextField = new JTextField("50000");
-		setButton = new JButton("Set!");
-		selectXMLButton = new JButton("Load XML File...");
-//		filepathLabel = new JLabel("<--Select an XML file");
-		infoLabel = new JTextArea("Load an XML file.");
-		jfc1 = new JFileChooser();
-		filepath = "";
-		xmlPreviewTextArea = new JTextArea("Load XML...");
-		panel = new JPanel();
-		JScrollPane scrollPane = new JScrollPane(xmlPreviewTextArea);
-		scrollPane.setViewportView(xmlPreviewTextArea);
-		scrollPane.setPreferredSize(new Dimension(500, 500));
+    public XMLTestesView() {
+        presenter = new XMLTestesPresenter(this);
+        setModel(getPresenter().getModel());
 
-//		JFrame.setDefaultLookAndFeelDecorated(true);
+        n = new CustomJFrame();
+        jfc1 = new JFileChooser();
 
-		add(panel);
-		panel.setSize(800, 800);
-//		panel.add(filepathLabel);
-		panel.add(selectXMLButton, BorderLayout.NORTH);
-		panel.add(infoLabel, BorderLayout.NORTH);
-		panel.add(moneyTextField, BorderLayout.NORTH);
-		panel.add(setButton, BorderLayout.NORTH);
-		panel.add(menu);
-		panel.add(scrollPane);		
-		
-		this.setTitle("Stardew Valley Money Hack");
-		this.setJMenuBar(menu);
-		this.setSize(810,660);
-		this.setVisible(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.pack();
+        n.setVisible(true);
+        n.setTitle("Stardew Valley Money Mod v1.1");
+        
+        n.getjMenuItem1().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// new menu item
+				n.getLoadButton().setVisible(true);
+				n.getMoneyField().setVisible(false);
+				n.getSetButton().setVisible(false);
+				n.getXmlArea().setText("Load a new file.");
+				n.getInfoLabel().setText("Load a new file.");
 				
-		selectXMLButton.setBounds(50,50,150,20); 
-//		moneyTextField.setBounds(100,100,200,20);  
-//		infoLabel.setBounds(50,200,150,40);   
-//		setButton.setBounds(10,50,20,50); 
-		setButton.setVisible(false);
-		moneyTextField.setVisible(false);
-		infoLabel.setVisible(false);
-//		moneyTextField.setSize(300, 300);
-//		filepathLabel.setBounds(250,40,500,40); 
-//		panel.setBounds(10,10,450,450); 
-		xmlPreviewTextArea.setBounds(0, 0, 400, 400);
-	
-		setButton.addActionListener(this);
-		selectXMLButton.addActionListener(this);
-		
-        jfc1.setCurrentDirectory(new File (this.presenter.getFilePath()));
-        
-        xmlPreviewTextArea.setWrapStyleWord(true);
-        xmlPreviewTextArea.setLineWrap(true);
-        xmlPreviewTextArea.setEditable(false);
-        
-        infoLabel.setWrapStyleWord(true);
-        infoLabel.setLineWrap(true);
-        infoLabel.setEditable(false);
-        infoLabel.setOpaque(false);
-        infoLabel.setBackground(Color.lightGray);
-        infoLabel.setVisible(false);
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-        if(e.getSource()==setButton){  
+			}
         	
-        	presenter.editFile(moneyTextField.getText(), presenter.getFilePath());
-        	infoLabel.setText("XML File Updated! Money set to: " + moneyTextField.getText());
+        });
+        n.getjMenuItem2().addActionListener(new ActionListener() {
 
-            xmlPreviewTextArea.setOpaque(true);
-            xmlPreviewTextArea.setBackground(Color.MAGENTA);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Open 
+				loadFile();
+			}
+        	
+        });
+        n.getjMenuItem3().addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//exit menu item
+				System.exit(1);
+			}
+        	
+        });
+        n.getjMenuItem5().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//btc menu item bc1qp9nm8y654jsxr0v373ne6cn2lyzhag7wucqsth
+				JFrame j =  new JFrame("Donate BTC");
+				JTextArea ta = new JTextArea("bc1qp9nm8y654jsxr0v373ne6cn2lyzhag7wucqsth");
+				ta.setBackground(Color.black);
+				ta.setForeground(Color.green);
+				j.setSize(350, 45);
+				j.setLocationRelativeTo(n);
+				ta.setEditable(false);
+				j.add(ta);
+				j.setVisible(true);
+				
+			}
+        	
+        });
+        n.getjMenuItem6().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//contact menu item         https://www.patreon.com/enhance
+
+				JFrame j =  new JFrame("Contact");
+				JTextArea ta = new JTextArea("https://www.patreon.com/enhance");
+				ta.setBackground(Color.black);
+				ta.setForeground(Color.green);
+				j.setSize(350, 45);
+				j.setLocationRelativeTo(n);
+				ta.setEditable(false);
+				j.add(ta);
+				j.setVisible(true);
+				
+			}
+        	
+        });
+        n.getjMenuItem7().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//btc menu item bc1qp9nm8y654jsxr0v373ne6cn2lyzhag7wucqsth
+				JFrame j =  new JFrame("About Stardew Valley Money Mod Tool");
+				JTextArea ta = new JTextArea("Stardew Valley Money Mod Tool \nVersion 1.1 \nby FrodoSackins\n Windows\\Mac\\Linux compatible");
+				ta.setBackground(Color.black);
+				ta.setForeground(Color.green);
+				j.setSize(350, 100);
+				j.setLocationRelativeTo(n);
+				ta.setEditable(false);
+				j.add(ta);
+				j.setVisible(true);
+				
+			}
+        	
+        });
+        n.getjMenuItem8().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//ether menu item 0xE86242bf7eF0d0e81F45470e3C50B10D90D012F7
+				JFrame j =  new JFrame("Donate ETH");
+				JTextArea ta = new JTextArea("0xE86242bf7eF0d0e81F45470e3C50B10D90D012F7");
+				ta.setBackground(Color.black);
+				ta.setForeground(Color.green);
+				j.setSize(350, 45);
+				j.setLocationRelativeTo(n);
+				ta.setEditable(false);
+				j.add(ta);
+				j.setVisible(true);
+			}
+        	
+        });
+        
+        
+        	
+        
+        n.getSetButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	n.getXmlArea().setText("");
+                presenter.editFile(n.getMoneyField().getText());
+                presenter.reloadXMLfile();
+                
+                try {
+					n.getXmlArea().setText(presenter.readFile());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+                scrollToWord(find);
+                n.getInfoLabel().setText("Success! User file updated to: $" + n.getMoneyField().getText() +". Happy Farming :P ");
+                n.getSetButton().setEnabled(false);
+                n.getMoneyField().setEnabled(false);
+
+            }
+        });
+
+        n.getLoadButton().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+          
+            	loadFile();
+
+            }
+
+        });
+
+    }
+
+    ;
+	public void loadFile() {
+		jfc1.setCurrentDirectory(new File (System.getProperty("user.home") + System.getProperty("file.separator") + presenter.getHomeDir()));
+
+    	int i = jfc1.showOpenDialog(n);
+        if (i == JFileChooser.APPROVE_OPTION) {
+            presenter.setFile(jfc1.getSelectedFile());
+            presenter.setAbsolutePath(jfc1.getSelectedFile().getAbsolutePath());
             
-        } else if (e.getSource()==selectXMLButton) {
+            try {
+				n.getXmlArea().setText(presenter.readFile());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+            n.getXmlArea().setWrapStyleWord(true);
+            n.getXmlArea().setLineWrap(true);
+            n.getXmlArea().setEditable(false);
+            n.getLoadButton().setVisible(false);
+            n.getMoneyField().setVisible(true);
+            n.getSetButton().setVisible(true);
+            n.getMoneyField().setEnabled(true);
+            n.getSetButton().setEnabled(true);
 
-        	int i = jfc1.showOpenDialog(this);
-        	if(i==JFileChooser.APPROVE_OPTION){    
-        	       File f=jfc1.getSelectedFile();    
-        	       String filepath=f.getPath();    
-        	       try{  
-        	       BufferedReader br=new BufferedReader(new FileReader(filepath));    
-        	       String s1="",s2="";                         
-        	       while((s1=br.readLine())!=null){    
-        	       s2+=s1+"\n";    
-        	       }    
-        	       xmlPreviewTextArea.setText(s2);
-        	       filepathLabel.setText(presenter.getFilePath());
-        	       br.close();    
-        	       
-        	     
-        	       }catch (Exception ex) {ex.printStackTrace();  }                 
-        	   } 
+            // Focus the text area, otherwise the highlighting won't show up
+            scrollToWord(find);
+
+            n.getInfoLabel().setText("File Loaded.");
+
+        } if (i==1) {
         	
-        	panel.remove(selectXMLButton);
+        }
+	}
+    public XMLTestesPresenter getPresenter() {
+        return presenter;
+    }
 
-        	selectXMLButton.setVisible(false);
-        	infoLabel.setVisible(true);
-        	moneyTextField.setVisible(true);
-    		setButton.setVisible(true);
-    		infoLabel.setText("Enter new money amount and click Set");
+    public void setModel(XMLTestesModel model) {
+        this.model = model;
+    }
+
+    public XMLTestesModel getModel() {
+        return model;
+    }
+
+    public void scrollToWord(String find) {
+        int pos = 0;
+        n.getXmlArea().requestFocusInWindow();
+        // Make sure we have a valid search term
+        if (find != null && find.length() > 0) {
+            Document document = n.getXmlArea().getDocument();
+            int findLength = find.length();
+            try {
+                boolean found = false;
+                // Rest the search position if we're at the end of the document
+                if (pos + findLength > document.getLength()) {
+                    pos = 0;
+                }
+                // While we haven't reached the end...
+                // "<=" Correction
+                while (pos + findLength <= document.getLength()) {
+                    // Extract the text from the document
+                    String match = document.getText(pos, findLength).toLowerCase();
+                    // Check to see if it matches or request
+                    if (match.equals(find)) {
+                        found = true;
+                        break;
+                    }
+                    pos++;
+                }
+
+                // Did we find something...
+                if (found) {
+                    // Get the rectangle of the where the text would be visible...
+                    Rectangle viewRect = n.getXmlArea().modelToView(pos);
+                    // Scroll to make the rectangle visible
+                    n.getXmlArea().scrollRectToVisible(viewRect);
+                    // Highlight the text
+                    n.getXmlArea().setCaretPosition(pos + findLength);
+                    n.getXmlArea().moveCaretPosition(pos);
+                    // Move the search position beyond the current match
+                    pos += findLength;
+                }
+
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
 
         }
-	
-	}
+    }
 
 }
