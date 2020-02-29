@@ -1,6 +1,9 @@
 package ui;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -21,105 +24,171 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.sun.javafx.PlatformUtil;
+
 public class XMLTestesModel {
-	String homeDir = System.getProperty("user.home");
-    String stardew = homeDir + "/.config/StardewValley/Saves/";
-	String filepath = stardew;
-	private XMLTestesPresenter presenter;
-	
-	public XMLTestesModel(XMLTestesPresenter presenter){
-		
-		this.presenter = presenter;
-		
-	}
-	private String money;	
-	
-	public String getFilepath() {
-		return filepath;
-	}
 
-	public void setFilepath(String filepath) {
-		this.filepath = filepath;
-	}
-
-	public String getMoney() {
-		return money;
-	}
+    private String homeDir;
+    private String absolutePath;
 
 
-	private DocumentBuilderFactory docFactory;
-	private Document doc;
-	public Document getDoc() {
-		return doc;
-	}
+	private String filepath = "";
+    private XMLTestesPresenter presenter;
+    private File file;
+    private String money;
+    private String platform;
+    private String systemPropHomeDir;
 
-	public void setDoc(Document doc) {
-		this.doc = doc;
-	}
 
-	private DocumentBuilder docBuilder;
-	
-	public Boolean editFile(String money, String path) {
-		docFactory = DocumentBuilderFactory.newInstance();
-		doc = null;
-		try {
-			docBuilder = docFactory.newDocumentBuilder();
-			doc = docBuilder.parse(new InputSource(path));
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    public XMLTestesModel(XMLTestesPresenter presenter) {
 
-		// Get the root element
-		 setMoney(doc.getDocumentElement(), money);
-		 
-		 Transformer xformer = null;
-		try {
-			xformer = TransformerFactory.newInstance().newTransformer();
-		} catch (TransformerConfigurationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (TransformerFactoryConfigurationError e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		   try {
-				xformer.transform(new DOMSource(doc), new StreamResult(new File(filepath)));
-			} catch (TransformerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return true;
-	}
-	public void setMoney(Node node, String money) {
-	   // do something with the current node instead of System.out
-//	   System.out.println(node.getNodeName());
-		
-		if (node.getNodeName() =="money") {
-    		node.setTextContent(money);	
-    		
-    		System.out.println("Money set to: "+ money);
-    	}
+        this.presenter = presenter;
+        
+    	
+	  if (PlatformUtil.isMac()){
+		  platform = "Mac";
+		  systemPropHomeDir = System.getProperty("user.home");
+		  homeDir = ("/.config/StardewValley/Saves/");
+		  filepath = homeDir;
+	  } else if (PlatformUtil.isWindows()){
+		  platform = "Windows";
+		  systemPropHomeDir = System.getProperty("user.home");
+	      homeDir = ("\\.config\\StardewValley\\Saves\\");
+		  filepath = homeDir;
 
-	   NodeList nodeList = node.getChildNodes();
-	   for (int i = 0; i < nodeList.getLength(); i++) {
-	       Node currentNode = nodeList.item(i);
-	       if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
-	           //calls this method for all the children which is Element
-	       	Element eElement = (Element) node;
-	       	if ("money".equals(eElement.getNodeName())) {
-	       		eElement.setTextContent("123444");
-	       	}
-	           setMoney(currentNode, money);
-	       }
-	   }
+	  }
+
+    }
+    public String getAbsolutePath() {
+		return absolutePath;
 	}
 
+
+	public void setAbsolutePath(String absolutePath) {
+		this.absolutePath = absolutePath;
+	}
+    
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+    
+    public String getHomeDir() {
+		return homeDir;
+	}
+
+	public void setHomeDir(String homeDir) {
+		this.homeDir = homeDir;
+	}
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
+    }
+
+    public String getMoney() {
+        return money;
+    }
+
+    private DocumentBuilderFactory docFactory;
+    private Document doc;
+
+    public Document getDoc() {
+        return doc;
+    }
+
+    public void setDoc(Document doc) {
+        this.doc = doc;
+    }
+
+    private DocumentBuilder docBuilder;
+
+    public Boolean editFile(String money) {
+        docFactory = DocumentBuilderFactory.newInstance();
+        doc = null;
+        try {
+            docBuilder = docFactory.newDocumentBuilder();
+            doc = docBuilder.parse(new InputSource(this.getAbsolutePath()));
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // Get the root element
+        setMoney(doc.getDocumentElement(), money);
+
+        Transformer xformer = null;
+        try {
+            xformer = TransformerFactory.newInstance().newTransformer();
+        } catch (TransformerConfigurationException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        } catch (TransformerFactoryConfigurationError e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        try {
+            xformer.transform(new DOMSource(doc), new StreamResult(new File(this.getAbsolutePath())));
+        } catch (TransformerException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    public String readFile() throws IOException {
+    	
+    	BufferedReader br = new BufferedReader(new FileReader(getFile()));
+        String s1 = "", s2 = "";
+        while ((s1 = br.readLine()) != null) {
+            s2 += s1 + "\n";
+        }
+
+        br.close();
+    	
+		return s2;
+    	
+    }
+    
+    public void setMoney(Node node, String money) {
+
+        if (node.getNodeName() == "money") {
+            node.setTextContent(money);
+
+            System.out.println("Money set to: " + money);
+        }
+
+        NodeList nodeList = node.getChildNodes();
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node currentNode = nodeList.item(i);
+            if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
+                //calls this method for all the children which is Element
+                Element eElement = (Element) node;
+                if ("money".equals(eElement.getNodeName())) {
+                    eElement.setTextContent("123444");
+                }
+                setMoney(currentNode, money);
+            }
+        }
+    }
+
+    public void reloadXMLfile() {
+    	
+        docFactory = DocumentBuilderFactory.newInstance();
+        doc = null;
+        try {
+            docBuilder = docFactory.newDocumentBuilder();
+            doc = docBuilder.parse(new InputSource(this.getAbsolutePath()));
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.mycompany.bin;
+package bin.ui;
 
 public class UI {
 
