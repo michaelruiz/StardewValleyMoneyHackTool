@@ -39,7 +39,6 @@ public class XMLTestesModel {
     private String platform;
     private String systemPropHomeDir;
 
-
     public XMLTestesModel(XMLTestesPresenter presenter) {
 
         this.presenter = presenter;
@@ -59,6 +58,7 @@ public class XMLTestesModel {
 	  }
 
     }
+    
     public String getAbsolutePath() {
 		return absolutePath;
 	}
@@ -83,6 +83,7 @@ public class XMLTestesModel {
 	public void setHomeDir(String homeDir) {
 		this.homeDir = homeDir;
 	}
+	
     public String getFilepath() {
         return filepath;
     }
@@ -188,7 +189,5 @@ public class XMLTestesModel {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
-
 }

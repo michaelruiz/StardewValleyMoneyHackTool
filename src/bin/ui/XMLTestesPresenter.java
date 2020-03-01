@@ -20,6 +20,7 @@ public class XMLTestesPresenter {
 
     	
     }
+    
     public void setAbsolutePath(String path) {
         this.model.setAbsolutePath(path);
     }
@@ -51,12 +52,15 @@ public class XMLTestesPresenter {
     public String getMoney() {
         return this.model.getMoney();
     }
+    
     public String getHomeDir() {
         return this.model.getHomeDir();
     }
+    
     public void setHomeDir(String homeDir) {
     	this.model.setHomeDir(homeDir);
     }
+    
     public Boolean editFile(String money) {
         return (this.model.editFile(money));
     }
@@ -78,4 +82,5 @@ public class XMLTestesPresenter {
 		// TODO Auto-generated method stub
 		this.model.reloadXMLfile();
 	}
+	
 }
