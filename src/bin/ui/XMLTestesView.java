@@ -54,6 +54,7 @@ public class XMLTestesView {
 			}
         	
         });
+        
         n.getjMenuItem2().addActionListener(new ActionListener() {
 
 			@Override
@@ -63,6 +64,7 @@ public class XMLTestesView {
 			}
         	
         });
+        
         n.getjMenuItem3().addActionListener(new ActionListener() {
 
 			@Override
@@ -72,6 +74,7 @@ public class XMLTestesView {
 			}
         	
         });
+        
         n.getjMenuItem5().addActionListener(new ActionListener() {
 
 			@Override
@@ -90,6 +93,7 @@ public class XMLTestesView {
 			}
         	
         });
+        
         n.getjMenuItem6().addActionListener(new ActionListener() {
 
 			@Override
@@ -109,6 +113,7 @@ public class XMLTestesView {
 			}
         	
         });
+        
         n.getjMenuItem7().addActionListener(new ActionListener() {
 
 			@Override
@@ -127,6 +132,7 @@ public class XMLTestesView {
 			}
         	
         });
+        
         n.getjMenuItem8().addActionListener(new ActionListener() {
 
 			@Override
@@ -144,9 +150,6 @@ public class XMLTestesView {
 			}
         	
         });
-        
-        
-        	
         
         n.getSetButton().addActionListener(new ActionListener() {
             @Override
@@ -179,9 +182,8 @@ public class XMLTestesView {
 
         });
 
-    }
-
-    ;
+    };
+    
 	public void loadFile() {
 		jfc1.setCurrentDirectory(new File (System.getProperty("user.home") + System.getProperty("file.separator") + presenter.getHomeDir()));
 
@@ -214,6 +216,7 @@ public class XMLTestesView {
         	
         }
 	}
+	
     public XMLTestesPresenter getPresenter() {
         return presenter;
     }
@@ -268,8 +271,6 @@ public class XMLTestesView {
             } catch (Exception exp) {
                 exp.printStackTrace();
             }
-
         }
     }
-
 }
