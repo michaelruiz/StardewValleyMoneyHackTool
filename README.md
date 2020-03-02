@@ -1,5 +1,5 @@
 # StardewValleyMoneyHackTool
-Custom mod tool developed by me. 
+Custom mod tool developed by me. Written in Java 8. 
 
 1) Load user XML file.
 2) Enter new money value.
