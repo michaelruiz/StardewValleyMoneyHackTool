@@ -52,14 +52,22 @@ public class XMLTestesModel {
 	  } else if (PlatformUtil.isWindows()){
 		  platform = "Windows";
 		  systemPropHomeDir = System.getProperty("user.home");
-	      homeDir = ("\\.config\\StardewValley\\Saves\\");
+	      homeDir = System.getenv("APPDATA") + "\\StardewValley\\Saves";
 		  filepath = homeDir;
 
 	  }
 
     }
     
-    public String getAbsolutePath() {
+    public String getPlatform() {
+		return platform;
+	}
+
+	public void setPlatform(String platform) {
+		this.platform = platform;
+	}
+
+	public String getAbsolutePath() {
 		return absolutePath;
 	}
 
