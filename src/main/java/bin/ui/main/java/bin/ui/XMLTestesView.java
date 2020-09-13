@@ -206,13 +206,10 @@ public class XMLTestesView {
     };
     
 	public void loadFile() {
-		if (model.getPlatform().equals("Windows")) {
-			jfc1.setCurrentDirectory(new File(model.getHomeDir()));
+		
 
-		} else {
-			
-			jfc1.setCurrentDirectory(new File (model.getHomeDir()));
-		}
+		jfc1.setCurrentDirectory(new File (model.getHomeDir()));
+
 
     	int i = jfc1.showOpenDialog(jFrame);
         if (i == JFileChooser.APPROVE_OPTION) {

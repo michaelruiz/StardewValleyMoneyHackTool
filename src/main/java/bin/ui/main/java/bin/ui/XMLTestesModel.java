@@ -47,13 +47,11 @@ public class XMLTestesModel {
 	  if (PlatformUtil.isMac()){
 		  platform = "Mac";
 		  systemPropHomeDir = System.getProperty("user.home");
-		  homeDir = ("/.config/StardewValley/Saves/");
-		  filepath = homeDir;
+		  homeDir = systemPropHomeDir + "/.config/StardewValley/Saves/";
 	  } else if (PlatformUtil.isWindows()){
 		  platform = "Windows";
 		  systemPropHomeDir = System.getProperty("user.home");
 	      homeDir = System.getenv("APPDATA") + "\\StardewValley\\Saves";
-		  filepath = homeDir;
 
 	  }
 
