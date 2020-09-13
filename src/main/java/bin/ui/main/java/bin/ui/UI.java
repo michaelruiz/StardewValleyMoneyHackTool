@@ -1,4 +1,4 @@
-package ui;
+package main.java.bin.ui;
 
 public class UI {
 

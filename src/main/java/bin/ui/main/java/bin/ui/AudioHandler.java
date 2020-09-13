@@ -1,4 +1,4 @@
-package ui;
+package main.java.bin.ui;
 
 import javax.sound.sampled.*;
 import java.io.File;
@@ -7,8 +7,7 @@ import javax.sound.sampled.LineEvent.Type;
 
 public class AudioHandler {
 
-	static void playClip(File clipFile) throws IOException, 
-	  UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
+	static void playClip(File clipFile) throws IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
 	  class AudioListener implements LineListener {
 	    private boolean done = false;
 	    @Override public synchronized void update(LineEvent event) {

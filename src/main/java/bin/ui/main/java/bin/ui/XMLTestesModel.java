@@ -1,4 +1,4 @@
-package ui;
+package main.java.bin.ui;
 
 import java.io.BufferedReader;
 import java.io.File;

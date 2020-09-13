@@ -1,4 +1,4 @@
-package ui;
+package main.java.bin.ui;
 
 import java.awt.Color;
 import java.awt.Rectangle;
@@ -126,21 +126,22 @@ public class XMLTestesView {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//About menu
-        		try {
-					AudioHandler.playClip(new File("/yay.wav"));
-				} catch (IOException | UnsupportedAudioFileException | LineUnavailableException	| InterruptedException e2) {
-					e2.printStackTrace();
-				}
+        		
 				JFrame j =  new JFrame("About Stardew Valley Money Mod Tool");
 				JTextArea ta = new JTextArea("Stardew Valley Money Mod Tool \nVersion 1.2 \nby FrodoSackins\n Windows\\Mac\\Linux compatible"
 						+ "\n \nSpecial thanks to my patreon supporters: \nTyler Robins \nDustin Michael Dixon\nChau Minh \nShawn\nDivi Lalambay Habari");
 				ta.setBackground(Color.black);
 				ta.setForeground(Color.green);
-				j.setSize(350, 350);
+				j.setSize(350,250);
 				j.setLocationRelativeTo(jFrame);
 				ta.setEditable(false);
 				j.add(ta);
 				j.setVisible(true);
+				try {
+					AudioHandler.playClip(new File("main/resources/yay.wav"));
+				} catch (IOException | UnsupportedAudioFileException | LineUnavailableException	| InterruptedException e2) {
+					e2.printStackTrace();
+				}
 				
 			}
         	
@@ -169,7 +170,7 @@ public class XMLTestesView {
             public void actionPerformed(ActionEvent e) {
             	
         		try {
-					AudioHandler.playClip(new File("/click.wav"));
+					AudioHandler.playClip(new File("main/resources/click.wav"));
 				} catch (IOException | UnsupportedAudioFileException | LineUnavailableException	| InterruptedException e2) {
 					e2.printStackTrace();
 				}
@@ -210,7 +211,7 @@ public class XMLTestesView {
 
 		} else {
 			
-			jfc1.setCurrentDirectory(new File (System.getProperty("user.home") + System.getProperty("file.separator") + presenter.getHomeDir()+"stardewvalley"));
+			jfc1.setCurrentDirectory(new File (model.getHomeDir()));
 		}
 
     	int i = jfc1.showOpenDialog(jFrame);
