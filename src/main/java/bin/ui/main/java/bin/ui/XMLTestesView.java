@@ -129,7 +129,8 @@ public class XMLTestesView {
         		
 				JFrame j =  new JFrame("About Stardew Valley Money Mod Tool");
 				JTextArea ta = new JTextArea("Stardew Valley Money Mod Tool \nVersion 1.2 \nby FrodoSackins\n Windows\\Mac\\Linux compatible"
-						+ "\n \nSpecial thanks to my patreon supporters: \nTyler Robins \nDustin Michael Dixon\nChau Minh \nShawn\nDivi Lalambay Habari");
+						+ "\n \n Thanks to all my patreon supporters: \nTyler Robins \nDustin Michael Dixon\nChau Minh \nShawn\nDivi Lalambay Habari"
+						+ "\n \n Cheers to kal-b for beta testing for me. :D");
 				ta.setBackground(Color.black);
 				ta.setForeground(Color.green);
 				j.setSize(350,250);

@@ -52,7 +52,6 @@ public class XMLTestesModel {
 		  platform = "Windows";
 		  systemPropHomeDir = System.getProperty("user.home");
 	      homeDir = System.getenv("APPDATA") + "\\StardewValley\\Saves";
-
 	  }
 
     }
