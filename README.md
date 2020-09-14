@@ -1,4 +1,4 @@
-# StardewValleyMoneyHackTool
+# StardewValleyMoneyModTool
 Custom mod tool developed by me. Written in Java 8. 
 
 1) Load user XML file.
